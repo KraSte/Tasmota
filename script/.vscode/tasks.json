@@ -63,6 +63,37 @@
       "options": {
         "cwd": "${fileDirname}"
       }
+    },
+    {
+      "label": "Tasmota: run active Berry file",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\run_berry_on_tasmota.py",
+        "--host",
+        "${input:tasmotaHost}",
+        "--capture-console",
+        //"--user",
+        //"${input:tasmotaUser}",
+        //"--password",
+        //"${input:tasmotaPassword}",
+        "--file",
+        "${fileBasename}"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    },
+    {
+      "label": "Tasmota: upload + run active Berry file",
+      "dependsOn": [
+        "Tasmota: upload active Berry file",
+        "Tasmota: run active Berry file"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
     }
   ]
 }
