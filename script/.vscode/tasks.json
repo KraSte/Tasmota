@@ -1,0 +1,68 @@
+{
+  "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "tasmotaHost",
+      "type": "promptString",
+      "description": "Tasmota host (IP or hostname)",
+      "default": "192.168.0.94"
+    },
+    {
+      "id": "tasmotaUser",
+      "type": "promptString",
+      "description": "Tasmota WebUI user (leave blank if none)",
+      "default": ""
+    },
+    {
+      "id": "tasmotaPassword",
+      "type": "promptString",
+      "description": "Tasmota WebUI password (leave blank if none)",
+      "password": true,
+      "default": ""
+    },
+    {
+      "id": "tasmotaEndpoint",
+      "type": "promptString",
+      "description": "Upload endpoint (leave default unless you know it)",
+      "default": "/ufsu?fsz="
+    }
+  ],
+  "tasks": [
+    {
+      "label": "Berry: run active file",
+      "type": "shell",
+      "command": "C:\\Users\\krs39498\\Documents\\github\\berry\\berry.exe",
+      "args": [
+        "${file}"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Tasmota: upload active Berry file",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": [
+        "${workspaceFolder}\\upload_berry_to_tasmota.py",
+        "--host",
+        "${input:tasmotaHost}",
+        //"--endpoint",
+        //"${input:tasmotaEndpoint}",
+        "--file",
+        "${file}"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${fileDirname}"
+      }
+    }
+  ]
+}
